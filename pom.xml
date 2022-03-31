@@ -46,27 +46,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
-                        <id>copy</id>
+                        <id>copy-dependencies</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>[ groupId ]</groupId>
-                                    <artifactId>[ artifactId ]</artifactId>
-                                    <version>[ version ]</version>
-                                    <type>[ packaging ]</type>
-                                    <classifier>[classifier - optional]</classifier>
-                                    <overWrite>[ true or false ]</overWrite>
-                                    <outputDirectory>[ output directory ]</outputDirectory>
-                                    <destFileName>[ filename ]</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                            <!-- other configurations here -->
+                            <!-- configure the plugin here -->
                         </configuration>
                     </execution>
                 </executions>

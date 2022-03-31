@@ -2,9 +2,9 @@ package services;
 
 import agents.Client;
 import agents.Lawyer;
-import exceptions.NoLawyerAvailableException;
 import handlers.Main;
 import interfaces.IBudgetable;
+import exceptions.NoLawyerAvailableException;
 
 public class Counseling extends Service implements IBudgetable {
 
