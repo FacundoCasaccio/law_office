@@ -8,8 +8,11 @@ import com.solvd.lawoffice.handler.Ticket;
 import com.solvd.lawoffice.service.Counseling;
 import com.solvd.lawoffice.service.Protection;
 import com.solvd.lawoffice.service.Succession;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 
 public class Runner {
 
@@ -63,6 +66,8 @@ public class Runner {
                 97.3);
         TicketsQueue queue = new TicketsQueue();
         OfficeClients clients = new OfficeClients();
+        //******************Files***********************
+        FileUtils file = new FileUtils();
 
         //Adding client to the list
         clients.addClient(testClient);
@@ -98,5 +103,8 @@ public class Runner {
 
         //queue.print();
         clients.print();
+
+        //**************************************************************************************************
+        File article = new File("C:\\Cursos\\law_office\\src\\main\\resources");
     }
 }
