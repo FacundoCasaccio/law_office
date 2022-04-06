@@ -1,18 +1,22 @@
 package com.solvd.lawoffice.agent;
 
+import com.solvd.lawoffice.officestandard.DaysOfTheWeek;
+
 import java.util.Scanner;
 
 public class Lawyer extends Person {
     private int enrollment;
     private String speciality;
+    private DaysOfTheWeek availability;
 
     public Lawyer() {
     }
 
-    public Lawyer(String name, String surname, int personalId, int enrollment, String speciality) {
+    public Lawyer(String name, String surname, int personalId, int enrollment, String speciality, DaysOfTheWeek availability) {
         super(name, surname, personalId);
         this.enrollment = enrollment;
         this.speciality = speciality;
+        this.availability = availability;
     }
 
     public int getEnrollment() {
@@ -31,10 +35,19 @@ public class Lawyer extends Person {
         this.speciality = speciality;
     }
 
+    public DaysOfTheWeek getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(DaysOfTheWeek availability) {
+        this.availability = availability;
+    }
+
     @Override
     public String toString() {
         return "Lawyer: " + super.toString() + "\nEnrollment: " +
-                this.enrollment + ", speciality: " + this.speciality + "\n";
+                this.enrollment + ", speciality: " + this.speciality +
+                "Available: " + this.availability + "\n";
     }
 
     @Override
@@ -49,10 +62,13 @@ public class Lawyer extends Person {
             this.setSpeciality(input.nextLine());
             System.out.print("Enter claimant lawyer enrollment: ");
             this.setEnrollment(input.nextInt());
+            this.setAvailability(DaysOfTheWeek.MONDAY);
             input.nextLine();//Consume line
         }
         System.out.println();
 
         return this;
     }
+
+
 }

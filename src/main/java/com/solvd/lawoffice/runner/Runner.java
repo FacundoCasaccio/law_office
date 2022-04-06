@@ -4,6 +4,9 @@ import com.solvd.lawoffice.agent.*;
 import com.solvd.lawoffice.collection.OfficeClients;
 import com.solvd.lawoffice.collection.OfficeLawyers;
 import com.solvd.lawoffice.collection.TicketsQueue;
+import com.solvd.lawoffice.officestandard.DaysOfTheWeek;
+import com.solvd.lawoffice.officestandard.Specialities;
+import com.solvd.lawoffice.officestandard.SpecializedLawyers;
 import com.solvd.lawoffice.handler.Ticket;
 import com.solvd.lawoffice.service.Counseling;
 import com.solvd.lawoffice.service.Protection;
@@ -23,12 +26,12 @@ public class Runner {
 
     public static void main(String[] args) {
         //Adding lawyers for testing
-        LAWYERS.addLawyer(new Lawyer("John", "Wick", 32453876, 333666, "criminal"));
-        LAWYERS.addLawyer(new Lawyer("Jim", "Carrey", 22200222, 220022, "labor"));
-        LAWYERS.addLawyer(new Lawyer("Homer", "Simpson", 64209, 64209, "family"));
-        LAWYERS.addLawyer(new Lawyer("Steve", "Jobs", 99999999, 123789, "corporate"));
-        LAWYERS.addLawyer(new Lawyer("Steve", "Grant Rogers", 77398712, 127835, "civil"));
-        LAWYERS.addLawyer(new Lawyer("Jeff", "Bezos", 90777111, 777777, "business"));
+        LAWYERS.addLawyer(SpecializedLawyers.CRIMINAL_LAWYER.getLawyer());
+        LAWYERS.addLawyer(SpecializedLawyers.LABOR_LAWYER.getLawyer());
+        LAWYERS.addLawyer(SpecializedLawyers.FAMILY_LAWYER.getLawyer());
+        LAWYERS.addLawyer(SpecializedLawyers.CORPORATE_LAWYER.getLawyer());
+        LAWYERS.addLawyer(SpecializedLawyers.CIVIL_LAWYER.getLawyer());
+        LAWYERS.addLawyer(SpecializedLawyers.BUSINESS_LAWYER.getLawyer());
 
         Client testClient = new Client(
                 "Facundo",
@@ -40,7 +43,8 @@ public class Runner {
                 "Stark",
                 1234556,
                 111222,
-                "civil");
+                "civil",
+                DaysOfTheWeek.MONDAY);
         Claimant testClaimant = new Claimant(
                 "Horacio",
                 "Guarani",
