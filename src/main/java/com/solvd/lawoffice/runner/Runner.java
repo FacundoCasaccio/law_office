@@ -70,8 +70,6 @@ public class Runner {
                 97.3);
         TicketsQueue queue = new TicketsQueue();
         OfficeClients clients = new OfficeClients();
-        //******************Files***********************
-        FileUtils file = new FileUtils();
 
         //Adding client to the list
         clients.addClient(testClient);
@@ -108,7 +106,5 @@ public class Runner {
         //queue.print();
         clients.print();
 
-        //**************************************************************************************************
-        File article = new File("C:\\Cursos\\law_office\\src\\main\\resources");
     }
 }
