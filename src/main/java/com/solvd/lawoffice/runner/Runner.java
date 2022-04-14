@@ -1,5 +1,7 @@
 package com.solvd.lawoffice.runner;
 
+import com.solvd.lawoffice.action.IList;
+import com.solvd.lawoffice.action.IPrintable;
 import com.solvd.lawoffice.agent.*;
 import com.solvd.lawoffice.collection.OfficeClients;
 import com.solvd.lawoffice.collection.OfficeLawyers;
@@ -16,6 +18,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Runner {
 
@@ -33,6 +40,37 @@ public class Runner {
         LAWYERS.addLawyer(SpecializedLawyers.CIVIL_LAWYER.getLawyer());
         LAWYERS.addLawyer(SpecializedLawyers.BUSINESS_LAWYER.getLawyer());
 
+        //Adding multiple clients for testing
+        Client testClient2 = new Client(
+                "William",
+                "Casaccio",
+                39765756,
+                new Address("Argentina", "Buenos Aires","Adrogué","Street",123));
+        Client testClient3 = new Client(
+                "Pablo",
+                "Casaccio",
+                39765756,
+                new Address("Argentina", "Buenos Aires","Adrogué","Street",123));
+        Client testClient4 = new Client(
+                "John",
+                "Casaccio",
+                39765756,
+                new Address("Argentina", "Buenos Aires","Adrogué","Street",123));
+        Client testClient5 = new Client(
+                "Martin",
+                "Casaccio",
+                39765756,
+                new Address("Argentina", "Buenos Aires","Adrogué","Street",123));
+        Client testClient6 = new Client(
+                "Erika",
+                "Casaccio",
+                39765756,
+                new Address("Argentina", "Buenos Aires","Adrogué","Street",123));
+        Client testClient7 = new Client(
+                "Eva",
+                "Casaccio",
+                39765756,
+                new Address("Argentina", "Buenos Aires","Adrogué","Street",123));
         Client testClient = new Client(
                 "Facundo",
                 "Casaccio",
@@ -69,10 +107,17 @@ public class Runner {
                 new Address("Argentina", "Buenos Aires","Lanus","Street",234),
                 97.3);
         TicketsQueue queue = new TicketsQueue();
-        OfficeClients clients = new OfficeClients();
+        OfficeClients officeClients = new OfficeClients();
 
         //Adding client to the list
-        clients.addClient(testClient);
+        officeClients.addClient(testClient);
+        officeClients.addClient(testClient2);
+        officeClients.addClient(testClient3);
+        officeClients.addClient(testClient4);
+        officeClients.addClient(testClient5);
+        officeClients.addClient(testClient6);
+        officeClients.addClient(testClient7);
+
 
         //Counseling ticket
         Counseling counseling = new Counseling(LAWYERS.getLawyerByOption(4), testClient);
@@ -104,7 +149,34 @@ public class Runner {
         //testClient.getTicketRegistry().print(); //Show ticket registry
 
         //queue.print();
-        clients.print();
+        //officeClients.print();
+
+        //Get lawyers by availability on specific day
+        //Using java provided functional interface
+        BiFunction<List<Lawyer>, DaysOfTheWeek, List<Lawyer>> lawyersByDay =
+                (lawyers, day) -> lawyers.stream()
+                        .filter(lawyer -> lawyer.getAvailability() == day)
+                        .collect(Collectors.toList());
+
+        //Test for lawyers available on Monday
+        System.out.println(lawyersByDay.apply(LAWYERS.getLawyers(), DaysOfTheWeek.MONDAY));
+
+        //List lawyers alphabetically
+        //Using java provided functional interface
+        Function<List<Lawyer>, List<Lawyer>> listLawyersAlphabetically =
+                (lawyers) -> lawyers.stream()
+                        .sorted(Comparator.comparing(Person::getName))
+                        .collect(Collectors.toList());
+
+        System.out.println(listLawyersAlphabetically.apply(LAWYERS.getLawyers()));
+
+        //List clients
+        //IList clientList = (officeClients) ->
 
     }
+
+    //public static void displayList(IPrintable list) {
+        //list.print();
+    //}
+
 }
