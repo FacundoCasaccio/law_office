@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class ThirdParty extends Person {
     private String role;
     private Address address;
+    private static final Logger LOGGER = LogManager.getLogger(ThirdParty.class);
 
     public ThirdParty() {
     }
@@ -47,24 +48,23 @@ public class ThirdParty extends Person {
         try (Scanner input = new Scanner(System.in)) {
 
             //ThirdParty personal data
-            System.out.print("Enter Third party name: ");
+            LOGGER.info("Enter Third party name: ");
             this.setName(input.nextLine());
-            System.out.print("Enter Third party surname: ");
+            LOGGER.info("Enter Third party surname: ");
             this.setSurname(input.nextLine());
-            System.out.print("Enter Third party role: ");
+            LOGGER.info("Enter Third party role: ");
             this.setRole(input.nextLine());
-            System.out.print("Enter Third party Id number: ");
+            LOGGER.info("Enter Third party Id number: ");
             this.setPersonalId(input.nextInt());
             input.nextLine(); //Consume line
         }
 
         //ThirdParty address update
-        System.out.println("\nEnter Third party Address: ");
+        LOGGER.info("\nEnter Third party Address: ");
         try {
             this.address = new Address().update();
         } catch (InvalidValueException e) {
-            Logger logger = LogManager.getLogger(ThirdParty.class);
-            logger.warn(e.getMessage());
+            LOGGER.warn(e.getMessage());
         }
 
         return this;

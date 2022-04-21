@@ -15,6 +15,7 @@ public class Client extends Person {
     private Address address;
     private ActiveTickets activeTickets = new ActiveTickets();
     private TicketRegistry ticketRegistry = new TicketRegistry();
+    private static final Logger LOGGER = LogManager.getLogger(Client.class);
 
     public Client(String name, String surname, int personalId, Address address) {
         super(name, surname, personalId);
@@ -48,20 +49,19 @@ public class Client extends Person {
         try (Scanner input = new Scanner(System.in)) {
 
             //Client personal data
-            System.out.print("Enter client name: ");
+            LOGGER.info("Enter client name: ");
             this.setName(input.nextLine());
-            System.out.print("Enter client surname: ");
+            LOGGER.info("Enter client surname: ");
             this.setSurname(input.nextLine());
-            System.out.print("Enter client Id number: ");
+            LOGGER.info("Enter client Id number: ");
             this.setPersonalId(input.nextInt());
             input.nextLine(); //Consume line
             //Client address update
-            System.out.println("\nEnter client Address: ");
+            LOGGER.info("\nEnter client Address: ");
             try {
                 this.address = new Address().update();
             } catch (InvalidValueException e) {
-                Logger logger = LogManager.getLogger(Client.class);
-                logger.warn(e.getMessage());
+                LOGGER.warn(e.getMessage());
             }
         }
 

@@ -1,6 +1,8 @@
 package com.solvd.lawoffice.agent;
 
 import com.solvd.lawoffice.exception.InvalidValueException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
@@ -9,6 +11,7 @@ import static java.lang.Double.parseDouble;
 public class Property extends Asset {
     private Address address;
     private double dimension;
+    private static final Logger LOGGER = LogManager.getLogger(Property.class);
 
     public Property() {
     }
@@ -47,17 +50,17 @@ public class Property extends Asset {
         try (Scanner input = new Scanner(System.in)) {
 
             //Property owner
-            System.out.println("Property owner data: \n");
+            LOGGER.info("Property owner data: \n");
             this.owner = new ThirdParty().update();
 
             //Property data
-            System.out.print("Enter property's value: ");
+            LOGGER.info("Enter property's value: ");
             this.setValue(parseDouble((input.nextLine())));
             if (this.value < 0) {
                 throw new InvalidValueException("Value cannot be negative");
             }
 
-            System.out.print("Enter property's dimension: ");
+            LOGGER.info("Enter property's dimension: ");
             this.setDimension(input.nextInt());
             if (this.dimension <= 0) {
                 throw new InvalidValueException("Dimension cannot be 0 or less");
@@ -66,7 +69,7 @@ public class Property extends Asset {
         }
 
         //Property address update
-        System.out.println("\nEnter property's address: ");
+        LOGGER.info("\nEnter property's address: ");
         this.address = new Address().update();
 
         return this;

@@ -1,23 +1,19 @@
 package com.solvd.lawoffice.runner;
 
-import com.solvd.lawoffice.action.IList;
-import com.solvd.lawoffice.action.IPrintable;
 import com.solvd.lawoffice.agent.*;
 import com.solvd.lawoffice.collection.OfficeClients;
 import com.solvd.lawoffice.collection.OfficeLawyers;
 import com.solvd.lawoffice.collection.TicketsQueue;
 import com.solvd.lawoffice.officestandard.DaysOfTheWeek;
-import com.solvd.lawoffice.officestandard.Specialities;
 import com.solvd.lawoffice.officestandard.SpecializedLawyers;
 import com.solvd.lawoffice.handler.Ticket;
 import com.solvd.lawoffice.service.Counseling;
 import com.solvd.lawoffice.service.Protection;
 import com.solvd.lawoffice.service.Succession;
-import org.apache.commons.io.FileUtils;
+import com.solvd.lawoffice.util.DisplayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -29,16 +25,16 @@ public class Runner {
     //Logger
     public static final Logger LOGGER = LogManager.getLogger();
     //Office lawyers
-    public static OfficeLawyers LAWYERS = new OfficeLawyers();
+    public static OfficeLawyers lawyers = new OfficeLawyers();
 
     public static void main(String[] args) {
         //Adding lawyers for testing
-        LAWYERS.addLawyer(SpecializedLawyers.CRIMINAL_LAWYER.getLawyer());
-        LAWYERS.addLawyer(SpecializedLawyers.LABOR_LAWYER.getLawyer());
-        LAWYERS.addLawyer(SpecializedLawyers.FAMILY_LAWYER.getLawyer());
-        LAWYERS.addLawyer(SpecializedLawyers.CORPORATE_LAWYER.getLawyer());
-        LAWYERS.addLawyer(SpecializedLawyers.CIVIL_LAWYER.getLawyer());
-        LAWYERS.addLawyer(SpecializedLawyers.BUSINESS_LAWYER.getLawyer());
+        lawyers.addLawyer(SpecializedLawyers.CRIMINAL_LAWYER.getLawyer());
+        lawyers.addLawyer(SpecializedLawyers.LABOR_LAWYER.getLawyer());
+        lawyers.addLawyer(SpecializedLawyers.FAMILY_LAWYER.getLawyer());
+        lawyers.addLawyer(SpecializedLawyers.CORPORATE_LAWYER.getLawyer());
+        lawyers.addLawyer(SpecializedLawyers.CIVIL_LAWYER.getLawyer());
+        lawyers.addLawyer(SpecializedLawyers.BUSINESS_LAWYER.getLawyer());
 
         //Adding multiple clients for testing
         Client testClient2 = new Client(
@@ -120,33 +116,35 @@ public class Runner {
 
 
         //Counseling ticket
-        Counseling counseling = new Counseling(LAWYERS.getLawyerByOption(4), testClient);
+        Counseling counseling = new Counseling(lawyers.getLawyerByOption(4), testClient);
         Ticket counselingTicket = new Ticket(counseling);
         testClient.addTicket(counselingTicket);
         queue.addTicket(counselingTicket); //Add ticket to the queue
         //counselingTicket.print();
 
         //Protection ticket
-        Protection protection = new Protection(LAWYERS.getLawyerByOption(1),testClient,testClaimant,witness);
+        Protection protection = new Protection(lawyers.getLawyerByOption(1),testClient,testClaimant,witness);
         Ticket protectionTicket = new Ticket(protection);
         testClient.addTicket(protectionTicket);
         queue.addTicket(protectionTicket); //Add ticket to the queue
         //protectionTicket.print();
 
         //Succession ticket
-        Succession succession = new Succession(LAWYERS.getLawyerByOption(3),testClient,witness,property);
+        Succession succession = new Succession(lawyers.getLawyerByOption(3),testClient,witness,property);
         Ticket successionTicket = new Ticket(succession);
         testClient.addTicket(successionTicket);
         queue.addTicket(successionTicket); //Add ticket to the queue
         //successionTicket.print();
 
-        //testClient.showActiveTickets();
-        //testClient.getActiveTickets().solveTicket(testClient,1); //Solve ticket
+        /* Active tickets manipulation
+        testClient.showActiveTickets();
+        testClient.getActiveTickets().solveTicket(testClient,1); //Solve ticket
 
-        //System.out.println("**********************************************");
+        System.out.println("**********************************************");
 
-        //testClient.showActiveTickets(); //Show updated active tickets
-        //testClient.getTicketRegistry().print(); //Show ticket registry
+        testClient.showActiveTickets(); //Show updated active tickets
+        testClient.getTicketRegistry().print(); //Show ticket registry
+         */
 
         //queue.print();
         //officeClients.print();
@@ -159,24 +157,17 @@ public class Runner {
                         .collect(Collectors.toList());
 
         //Test for lawyers available on Monday
-        System.out.println(lawyersByDay.apply(LAWYERS.getLawyers(), DaysOfTheWeek.MONDAY));
+        DisplayUtils.listNames(lawyers.getLawyers(),DaysOfTheWeek.MONDAY, lawyersByDay);
 
         //List lawyers alphabetically
         //Using java provided functional interface
-        Function<List<Lawyer>, List<Lawyer>> listLawyersAlphabetically =
+        Function<List<Lawyer>, List<Lawyer>> sortLawyersAlphabetically =
                 (lawyers) -> lawyers.stream()
                         .sorted(Comparator.comparing(Person::getName))
                         .collect(Collectors.toList());
 
-        System.out.println(listLawyersAlphabetically.apply(LAWYERS.getLawyers()));
-
-        //List clients
-        //IList clientList = (officeClients) ->
+        //List lawyers alphabetically by name
+        DisplayUtils.listNamesSorted(lawyers.getLawyers(), sortLawyersAlphabetically);
 
     }
-
-    //public static void displayList(IPrintable list) {
-        //list.print();
-    //}
-
 }

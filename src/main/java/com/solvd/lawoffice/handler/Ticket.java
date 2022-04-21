@@ -5,12 +5,15 @@ import com.solvd.lawoffice.service.Counseling;
 import com.solvd.lawoffice.service.Protection;
 import com.solvd.lawoffice.service.Service;
 import com.solvd.lawoffice.service.Succession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Ticket implements IPrintable {
     private Service service;
     private double budget;
     private int ticketId;
     private static int ticketIdCounter;
+    private static final Logger LOGGER = LogManager.getLogger(Ticket.class);
 
     public Ticket() {
         ticketIdCounter++;
@@ -57,10 +60,6 @@ public class Ticket implements IPrintable {
         return this.ticketId;
     }
 
-    public void displayTicket() {
-        System.out.println();
-    }
-
 
     @Override
     public String toString() {
@@ -71,6 +70,6 @@ public class Ticket implements IPrintable {
 
     @Override
     public void print() {
-        System.out.println((this));
+        LOGGER.info((this));
     }
 }

@@ -1,6 +1,8 @@
 package com.solvd.lawoffice.agent;
 
 import com.solvd.lawoffice.officestandard.DaysOfTheWeek;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
@@ -8,6 +10,7 @@ public class Lawyer extends Person {
     private int enrollment;
     private String speciality;
     private DaysOfTheWeek availability;
+    private static final Logger LOGGER = LogManager.getLogger(Lawyer.class);
 
     public Lawyer() {
     }
@@ -54,13 +57,13 @@ public class Lawyer extends Person {
     public Lawyer update() {
         try (Scanner input = new Scanner(System.in)) {
 
-            System.out.print("Enter claimant lawyer name: ");
+            LOGGER.info("Enter claimant lawyer name: ");
             this.setName(input.nextLine());
-            System.out.print("Enter claimant lawyer surname: ");
+            LOGGER.info("Enter claimant lawyer surname: ");
             this.setSurname(input.nextLine());
-            System.out.print("Enter claimant lawyer speciality: ");
+            LOGGER.info("Enter claimant lawyer speciality: ");
             this.setSpeciality(input.nextLine());
-            System.out.print("Enter claimant lawyer enrollment: ");
+            LOGGER.info("Enter claimant lawyer enrollment: ");
             this.setEnrollment(input.nextInt());
             this.setAvailability(DaysOfTheWeek.MONDAY);
             input.nextLine();//Consume line

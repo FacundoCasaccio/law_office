@@ -3,9 +3,12 @@ package com.solvd.lawoffice.collection;
 import com.solvd.lawoffice.agent.Client;
 import com.solvd.lawoffice.handler.Ticket;
 import com.solvd.lawoffice.action.IPrintable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ActiveTickets implements IPrintable {
     private TicketNode head;
+    private static final Logger LOGGER = LogManager.getLogger(ActiveTickets.class);
 
     public void insert(Ticket ticket) {
         TicketNode newTicket = new TicketNode(ticket);
@@ -107,7 +110,7 @@ public class ActiveTickets implements IPrintable {
 
         //Empty list case
         if(currentTicket == null) {
-            System.out.println("There are no active tickets");
+            LOGGER.info("There are no active tickets");
         } else {
             while (currentTicket != null) {
                 currentTicket.getTicket().print();

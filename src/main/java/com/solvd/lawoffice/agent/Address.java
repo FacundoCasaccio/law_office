@@ -2,6 +2,8 @@ package com.solvd.lawoffice.agent;
 
 import com.solvd.lawoffice.exception.InvalidValueException;
 import com.solvd.lawoffice.action.IUpdateable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
@@ -11,6 +13,7 @@ public class Address implements IUpdateable<Address> {
     private String city;
     private String street;
     private int number;
+    private static final Logger LOGGER = LogManager.getLogger(Address.class);
 
     public Address() {
     }
@@ -66,15 +69,15 @@ public class Address implements IUpdateable<Address> {
     public Address update() throws InvalidValueException {
         try (Scanner input = new Scanner(System.in)) {
 
-            System.out.print("Country: ");
+            LOGGER.info("Country: ");
             this.setCountry(input.nextLine());
-            System.out.print("State: ");
+            LOGGER.info("State: ");
             this.setState(input.nextLine());
-            System.out.print("City: ");
+            LOGGER.info("City: ");
             this.setCity(input.nextLine());
-            System.out.print("Street: ");
+            LOGGER.info("Street: ");
             this.setStreet(input.nextLine());
-            System.out.print("Number: ");
+            LOGGER.info("Number: ");
             this.setNumber(input.nextInt());
             if (this.number <= 0) {
                 throw new InvalidValueException("Address number cannot be below 0");
